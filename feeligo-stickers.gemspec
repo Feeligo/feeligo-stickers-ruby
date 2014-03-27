@@ -6,7 +6,7 @@ require 'feeligo/stickers/version'
 Gem::Specification.new do |spec|
   spec.name          = "feeligo-stickers"
   spec.version       = Feeligo::Stickers::VERSION
-  spec.authors       = ["Davide"]
+  spec.authors       = ["Feeligo Tech"]
   spec.email         = ["tech@feeligo.com"]
   spec.description   = %q{Easily add the Feeligo Stickers app to your site}
   spec.summary       = %q{Easily add the Feeligo Stickers app to your site}
