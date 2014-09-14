@@ -27,8 +27,9 @@ protected
     (function(f,ee,l,i,g,o){f[l]=f[l]||{};o&&(o+='').length?(f[l].context={viewer:
     {id:o},platform:{name:i,version:g}})&&(o='-'+o):(o='');(function(s,t,k,r){
     t=ee.createElement(r='script');k=ee.getElementsByTagName(r)[0];t.async=1;t.src=s;
-    k.parentNode.insertBefore(t,k);})('http://#{feeligo_api_hostname}/#{hostname}/loader'+o+'.js')})
-    (window,document,'flg','#{product}','#{version}'#{user_id});
+    k.parentNode.insertBefore(t,k);})('http://#{feeligo_api_hostname}/#{hostname}/loader'+o+'.js');
+    f[l].q=[];f[l].on=function(s,t,k){f[l].q.push([s,t,k])};
+    })(window,document,'flg','#{product}','#{version}'#{user_id});
     JS
   end
 
