@@ -52,6 +52,16 @@ describe Feeligo::Stickers do
       let(:user_id){0}
       it_behaves_like "it ignores the user_id"
     end
+    context "with https protocol" do
+      it "sets https as the protocol of the loader's URL" do
+        js = subject::loader_script_tag protocol: 'https'
+        js[/https:\/\//].should_not be_nil
+      end
+      it "uses stickersapissl.feeligo.com by default" do
+        js = subject::loader_script_tag protocol: 'https'
+        js[/https:\/\/stickersapissl.feeligo.com/].should_not be_nil
+      end
+    end
   end
 
 end

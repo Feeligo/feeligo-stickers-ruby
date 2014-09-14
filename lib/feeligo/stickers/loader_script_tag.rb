@@ -27,7 +27,7 @@ protected
     (function(f,ee,l,i,g,o){f[l]=f[l]||{};o&&(o+='').length?(f[l].context={viewer:
     {id:o},platform:{name:i,version:g}})&&(o='-'+o):(o='');(function(s,t,k,r){
     t=ee.createElement(r='script');k=ee.getElementsByTagName(r)[0];t.async=1;t.src=s;
-    k.parentNode.insertBefore(t,k);})('http://#{feeligo_api_hostname}/#{hostname}/loader'+o+'.js');
+    k.parentNode.insertBefore(t,k);})('#{protocol}://#{feeligo_api_hostname}/#{hostname}/loader'+o+'.js');
     f[l].q=[];f[l].on=function(s,t,k){f[l].q.push([s,t,k])};
     })(window,document,'flg','#{product}','#{version}'#{user_id});
     JS
@@ -45,9 +45,20 @@ protected
 
 
   # The hostname of Feeligo's API
-  # defaults to stickersapi.feeligo.com
+  # defaults to stickersapi.feeligo.com, or stickersapissl.feeligo.com if https
   def feeligo_api_hostname
-    @opts[:feeligo_api_hostname] || 'stickersapi.feeligo.com'
+    @opts[:feeligo_api_hostname] || if protocol.to_s == 'https'
+      'stickersapissl.feeligo.com'
+    else
+      'stickersapi.feeligo.com'
+    end
+  end
+
+
+  # The protocol used to load the loader script
+  # defaults to http
+  def protocol
+    @opts[:protocol] || 'http'
   end
 
 
