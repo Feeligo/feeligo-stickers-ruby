@@ -14,7 +14,9 @@ class Feeligo::Stickers::LoaderScriptTag
   end
 
 
+
 protected
+
 
 
   # The Javascript code

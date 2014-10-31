@@ -64,4 +64,48 @@ describe Feeligo::Stickers do
     end
   end
 
+
+  describe "::replace_sticker_tags" do
+    let(:opts){{}}
+    context "when the input contains at least one tag" do
+      let(:string){"Hello [s:PATH] world"}
+      it "does not change the original string, returns a different copy" do
+        input = string
+        expect(lambda{
+          result = Feeligo::Stickers.replace_sticker_tags(input, opts)
+          expect(result).not_to eq input
+        }).not_to change(input, :to_s)
+      end
+      context "with multiple tags" do
+        let(:string){"Hello [s:PATH1][s:PATH2] world"}
+        it "correctly replaces each tag" do
+          expect(Feeligo::Stickers.replace_sticker_tags(string, opts)).to eq(
+            'Hello <img src="http://stkr.es/PATH1"/><img src="http://stkr.es/PATH2"/> world')
+        end
+        context "when the tags correspond to different sizes" do
+          let(:string){"Hello [s:p3w/1][s:p7s/2][s:p/3][s:s/p3w] world"}
+          it "replaces them with 70x70px sticker images by default" do
+            expect(Feeligo::Stickers.replace_sticker_tags(string, opts)).to eq(
+              'Hello <img src="http://stkr.es/p/1"/><img src="http://stkr.es/p/2"/><img src="http://stkr.es/p/3"/><img src="http://stkr.es/s/p3w"/> world')
+          end
+        end
+      end
+    end
+    shared_examples "with no tags" do
+      it "returns an unchanged copy" do
+        result = Feeligo::Stickers.replace_sticker_tags(string, opts)
+        expect(result).to eq string
+        expect(result).not_to equal string # result !== string (it's a copy)
+      end
+    end
+    context "when the input contains no tags" do
+      let(:string){"Hello world"}
+      it_behaves_like "with no tags"
+    end
+    context "when the input contains a tag with no path" do
+      let(:string){"Hello [s:] world"}
+      it_behaves_like "with no tags"
+    end
+  end
+
 end
