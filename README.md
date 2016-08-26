@@ -37,6 +37,21 @@ Where `user_id` is the id of the authenticated user.
 The `user_id` should be a non-blank String or a non-zero integer. When no
 user is authenticated, it should be set to `nil`.
 
+Use `replace_sticker_tags` to replace a string message that contains sticker tags (`[s:PATH]`) into HTML `<img>` tags
+
+```rb
+Feeligo::Stickers.replace_sticker_tags(string, opts)
+```
+
+> By default images are hosted over `HTTP` at `stkr.es`
+> if available, you can override either the scheme or host domain or both settings using the opts parameter
+
+```rb
+# src: https://flg.stkr.fr/PATH
+opts = {scheme: 'https', host: 'flg.stkr.fr'}
+```
+
+
 
 ## Contributing
 

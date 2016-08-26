@@ -106,6 +106,30 @@ describe Feeligo::Stickers do
       let(:string){"Hello [s:] world"}
       it_behaves_like "with no tags"
     end
+    context "when the images scheme is overriden" do
+      let(:opts){{scheme: 'https'}}
+      let(:string){"Hello [s:PATH] world"}
+      it "correctly replaces the tag" do
+        expect(Feeligo::Stickers.replace_sticker_tags(string, opts)).to eq(
+          'Hello <img src="https://ssl.stkr.es/PATH"/> world')
+      end
+    end
+    context "when the images host is overriden" do
+      let(:opts){{host: 'flg.stkr.fr'}}
+      let(:string){"Hello [s:PATH] world"}
+      it "correctly replaces the tag" do
+        expect(Feeligo::Stickers.replace_sticker_tags(string, opts)).to eq(
+          'Hello <img src="http://flg.stkr.fr/PATH"/> world')
+      end
+    end
+    context "when both the images host and scheme are overriden" do
+      let(:opts){{host: 'flg.stkr.fr', scheme: 'https'}}
+      let(:string){"Hello [s:PATH] world"}
+      it "correctly replaces the tag" do
+        expect(Feeligo::Stickers.replace_sticker_tags(string, opts)).to eq(
+          'Hello <img src="https://flg.stkr.fr/PATH"/> world')
+      end
+    end
   end
 
 end
