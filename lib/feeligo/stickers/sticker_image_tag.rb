@@ -39,17 +39,32 @@ protected
     attrs = {}
     @opts.each_pair{|k, v| attrs[k.to_s] = v.to_s}
     attrs["src"] = image_url
-    attrs
+    attrs.reject{|k,v| %w(host scheme).include? k.to_s}
   end
 
 
   # The URL of the image
   def image_url
     return "" if @path.nil? || @path.empty?
-    "http://stkr.es/" << if m = /^(p3w|p7s|p)\/(.*)$/.match(@path)
+    "#{images_scheme}://#{images_host}/" << if m = /^(pv4|pfk|p7s|p6o|p3w|p7s|p)\/(.*)$/.match(@path)
       "p/" << m[2]
     else
       @path
+    end
+  end
+
+
+  def images_scheme
+    @opts[:scheme] || "http"
+  end
+
+
+  def images_host
+    return @opts[:host] if @opts[:host]
+    if @opts[:scheme] == "https"
+      "ssl.stkr.es"
+    else
+      "stkr.es"
     end
   end
 

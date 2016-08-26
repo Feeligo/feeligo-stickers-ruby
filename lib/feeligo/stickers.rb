@@ -5,7 +5,7 @@ require "feeligo/stickers/sticker_image_tag"
 
 module Feeligo
   module Stickers
-    
+
     # Returns a <script> tag which can be added to a View to load the Feeligo
     # Stickers module.
     # The <script> tag should be inserted right after the opening <body> tag
